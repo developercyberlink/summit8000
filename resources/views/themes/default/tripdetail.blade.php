@@ -5,7 +5,7 @@
 @section('thumbnail', $data->thumbnail)
 @section('content')
 <!-- hero section -->
-<section class="relative  ">
+<section class="relative ">     
     <div class="container">
         <!-- Breadcrumbs -->
         <nav aria-label="Breadcrumb" class="mx-auto px-4 my-6 text-xs sm:text-sm text-gray-500">
@@ -317,64 +317,7 @@
                         <div class=" max-w-none text-gray-700 space-y-6 ">
                             <h2 class="text-2xl  font-bold text-gray-900 text-gray-900">
                                 {{ $data->trip_title }} Overview</h2>
-                            <p>The Everest Base Camp Trek is one of Nepal's most legendary and iconic mountain
-                                adventures, following the same historic trail used by Sir Edmund Hillary and Tenzing
-                                Norgay on their journey to Everest Base Camp before the first successful summit of Mount
-                                Everest.</p>
-                            <p>The journey begins with an adventurous 30-minute flight to Lukla Airport. From Lukla, the
-                                trail winds through renowned Sherpa villages such as Namche Bazaar, Tengboche, and
-                                Dingboche, gradually ascending through the heart of the Khumbu region until you reach
-                                the ultimate destination, Everest Base Camp. </p>
-                            <h2 class="text-2xl font-bold text-gray-900 text-gray-900 mt-12">Key
-                                Highlights of Everest Base Camp Trek </h2>
-                            <p>The Everest Base Camp Trek brings together iconic viewpoints, towering Himalayan peaks,
-                                Sherpa culture, and protected alpine landscapes.</p>
-                            <h3 class="text-lg font-bold text-gray-900">Iconic Landmarks and Viewpoints</h3>
-                            <ul class="list-disc pl-5 space-y-3">
-                                <li>Stand at Everest Base Camp (5,364m), the legendary South Camp at the foot of the
-                                    world's highest mountain.</li>
-                                <li>Climb Kala Patthar (5,545m) at sunrise for close-up views of Everest, Lhotse,
-                                    Nuptse, Pumori, the Khumbu Glacier, and even Tibet.</li>
-                                <li>Take an acclimatization hike to Nagkartsang Hill (5,083m) in Dingboche, with
-                                    wide-ranging views of Makalu and Island Peak.</li>
-                                <li>Hike to Everest View Hotel (3,880m), the world's highest luxury hotel, for early
-                                    views of Everest, Ama Dablam, and Lhotse.</li>
-                            </ul>
-                            <h3 class="text-lg font-bold text-gray-900">8,000-Meter Peaks Visible on the EBC Trek Route
-                            </h3>
-                            <p>Only a few trekking trails offer three eight-thousanders in a single trek.</p>
-                            <ul class="list-disc pl-5 space-y-3">
-                                <li>Mount Everest (8,848.86m) – The world’s highest mountain, visible from Namche
-                                    Bazaar, Everest View Hotel, Kala Patthar, and Everest Base Camp.</li>
-                                <li>Lhotse (8,516m) – The fourth-highest mountain in the world, Everest’s dramatic
-                                    neighbor, best seen from the upper Khumbu Valley and Kala Patthar.</li>
-                                <li>Makalu (8,481m) – The fifth-highest mountain in the world, visible
-                                    from Dingboche and Nangkartshang Hill.</li>
-                            </ul>
-                            <h3 class="text-lg font-bold text-gray-900">Scenic Lukla Flight</h3>
-                            <p>Fly into Tenzing–Hillary Airport, Lukla (2,860m), the official starting point of the
-                                Everest Base Camp trek, known for its short runway, rapidly changing Himalayan weather,
-                                and reputation as one of the world’s most thrilling mountain flights.</p>
-                            <h3 class="text-lg font-bold text-gray-900">Sacred Monasteries & Sherpa Culture</h3>
-                            <ul class="list-disc pl-5 space-y-3">
-                                <li>Visit Tengboche Monastery (Tengboche Gompa), the largest in Khumbu, and join evening
-                                    prayers and meditation with the monks as they chant enchanting mantras.</li>
-                                <li>Explore historic sites such as Pangboche, the oldest monastery in the
-                                    Khumbu; Khumjung Monastery, known for housing a purported Yeti scalp; and the
-                                    monastery in Namche Bazaar. </li>
-                                <li>Witness rare monastery ceremonies, sacred mask dances, and vibrant local
-                                    participation as you trek through Tengboche during Mani Rimdu in late October or
-                                    early November, adding deep cultural meaning to your Everest Base Camp journey.</li>
-                                <li>Acclimatize in Namche Bazaar (3,440m), the cultural and commercial heart of the
-                                    Khumbu region. </li>
-                            </ul>
-                            <h3 class="text-lg font-bold text-gray-900">Sagarmatha National Park & Wildlife</h3>
-                            <ul class="list-disc pl-5 space-y-3">
-                                <li>Trek through Sagarmatha National Park (UNESCO World Heritage Site), following
-                                    ancient trails across forests, moraines, and alpine landscapes.</li>
-                                <li>Spot blue sheep, yaks, rare birds, and the Himalayan Monal (Danphe), Nepal’s
-                                    national bird. </li>
-                            </ul>
+                           {!!$data->trip_content!!}
                         </div>
                         <!-- Text Content Sections -->
                     </div>
@@ -406,19 +349,20 @@
                             <div id="accordion-itinerary" data-accordion="collapse"
                                 class="rounded-base border border-default overflow-hidden shadow-xs">
                                 <!--  -->
-                                <div id="heading-1">
+                                @foreach($itinerary as $key => $value)
+                                <div id="heading-{{ $key+1 }}">
                                     <button type="button"
                                         class="flex items-center justify-between w-full p-5 font-semibold  rtl:text-right text-base rounded-t-base border border-t-0 border-x-0 border-b-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 text-left"
-                                        data-accordion-target="#body-1" aria-expanded="true" aria-controls="body-1">
+                                        data-accordion-target="#body-{{ $key+1 }}" aria-expanded="true" aria-controls="body-{{$key+1}}">
                                         <span class="text-brand-900">
-                                            <span class="text-brand-400 mr-1">Day 1:</span> Arrival in Kathmandu and
-                                            Transfer to Hotel </span>
+                                            <span class="text-brand-400 mr-1">Day {{ $value->days }}:</span> 
+                                            {{ $value->title }}</span>
                                         <i data-accordion-icon
                                             class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400 text-sm text-brand-400"></i>
                                     </button>
                                 </div>
-                                <div id="body-1" class="hidden border border-s-0 border-e-0 border-t-0 border-b-default"
-                                    aria-labelledby="heading-1">
+                                <div id="body-{{ $key+1}}" class="hidden border border-s-0 border-e-0 border-t-0 border-b-default"
+                                    aria-labelledby="heading-{{ $key+1 }}">
                                     <div
                                         class="space-y-3 py-5 text-base font-normal text-gray-700 p-4 md:p-5 p-4 md:p-5">
                                         <p>Welcome to Nepal! Upon arrival at Tribhuvan International Airport - TIA,
@@ -454,8 +398,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endforeach
                                 <!--  -->
-                                <!-- Day 2 -->
+                                {{-- <!-- Day 2 -->
                                 <div id="heading-2">
                                     <button type="button"
                                         class="flex items-center justify-between w-full p-5 font-semibold  rtl:text-right text-base rounded-t-base border border-t-0 border-x-0 border-b-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 text-left"
@@ -489,7 +434,6 @@
                                     </div>
                                 </div>
 
-                                    aria-labelledby="heading-3">
                                     <div class="space-y-3 py-5 text-base font-normal text-gray-700 p-4 md:p-5">
                                         <p> Early morning scenic flight to Lukla, one of the most adventurous airstrips
                                             in the world. Meet the trekking crew and begin your walk. </p>
@@ -506,7 +450,7 @@
                                                 <span class="font-semibold">Breakfast, Lunch & Dinner</span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                  
                             </div>
                         </div>
@@ -539,6 +483,7 @@
                 </section>
                 <!-- end -->
                 <!-- Cost Includes -->
+                @if($cost_includes->count()> 0)
                 <section class="py-6" id="price-includes">
                     <div class="">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 ">
@@ -549,69 +494,21 @@
                                         <h3 class="font-bold text-sm uppercase text-brand-900 mb-4 tracking-wider">
                                             Accommodation </h3>
                                         <ul class="space-y-3 text-sm">
+                                            @foreach($cost_includes as $key => $value)
+                                                
                                             <li class="flex items-start">
                                                 <i class="far fa-check-circle text-green-500 mt-1 mr-3 shrink-0"></i>
                                                 <span>
-                                                    <span class="font-bold">In Kathmandu:</span> Four nights of
-                                                    twin-sharing/double accommodation at a 3-star hotel in Kathmandu
-                                                    with breakfast (two nights before and two nights after the trek).
+                                                    <span >
+                                                        {{ $value->title }}
                                                 </span>
                                             </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-check-circle text-green-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>
-                                                    <span class="font-bold">During the Trek:</span> Best selective
-                                                    comfortable lodge accommodation on a twin-sharing basis at altitude
-                                                    which include private bathrooms and hot showers in Phakding, Namche,
-                                                    and Lukla. </span>
-                                            </li>
+                                            @endforeach
+
+                                          
                                         </ul>
                                     </div>
-                                    <div>
-                                        <h3 class="font-bold text-sm uppercase text-brand-900 mb-4 tracking-wider">Meals
-                                        </h3>
-                                        <ul class="space-y-3 text-sm">
-                                            <li class="flex items-start">
-                                                <i class="far fa-check-circle text-green-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>
-                                                    <span class="font-bold">Breakfast in Kathmandu</span> Four
-                                                    breakfasts in Kathmandu </span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-check-circle text-green-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>
-                                                    <span class="font-bold">Full Board Meals During the Trek</span> All
-                                                    standard meals served during the 11 days of trek—breakfast, lunch,
-                                                    and dinner </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h3 class="font-bold text-sm uppercase text-brand-900 mb-4 tracking-wider">
-                                            Transportation and Flights</h3>
-                                        <ul class="space-y-3 text-sm">
-                                            <li class="flex items-start">
-                                                <i class="far fa-check-circle text-green-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>
-                                                    <span class="font-bold">All airport transfers</span> (pickup and
-                                                    drop-off) and ground transportation in a private tourist vehicle.
-                                                </span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-check-circle text-green-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>
-                                                    <span class="font-bold">Round-trip ground transportation
-                                                    </span>between Kathmandu and Ramechhap during peak trekking season.
-                                                </span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-check-circle text-green-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>
-                                                    <span class="font-bold">Round-trip flights</span> to and from Lukla.
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
+                               
                                 </div>
                             </div>
                             <div class="bg-red-50 p-6 rounded-2xl border border-red-100">
@@ -619,61 +516,13 @@
                                 <div class="space-y-8">
                                     <div>
                                         <ul class="space-y-3 text-sm">
+                                    @foreach($cost_excludes as $key => $value)
+
                                             <li class="flex items-start">
                                                 <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>Lunches and dinners while in Kathmandu</span>
+                                                <span>{{ $value->title }}</span>
                                             </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>International airfare to and from Nepal</span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>Nepal entry visa (available upon arrival at the airport)</span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>Personal travel insurance that includes high-altitude trekking and
-                                                    emergency evacuation</span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>Personal trekking gear, equipment, and clothing</span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>Hot showers at lodges that charge a fee (except in Phakding,
-                                                    Namche, and Lukla)</span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>Wi-Fi access, mobile calls, and charging fees unless provided free
-                                                    by the lodge</span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>Extra snacks, alcoholic drinks, bottled beverages, drinking water,
-                                                    and other personal purchases during the trek</span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>Excess baggage charges on domestic flights if you exceed 15
-                                                    kg</span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>Optional helicopter upgrade to or from Lukla (extra approx. USD
-                                                    450 per person from Kathmandu or Ramechhap)</span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>Extra nights in Kathmandu if you arrive early, depart later, or
-                                                    return from the mountains ahead of schedule.</span>
-                                            </li>
-                                            <li class="flex items-start">
-                                                <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>Tips and gratuities for your guide, porter, and driver</span>
-                                            </li>
+                                       @endforeach
                                         </ul>
                                     </div>
                                 </div>
@@ -681,6 +530,7 @@
                         </div>
                     </div>
                 </section>
+                @endif
                 <!-- end -->
                 <!-- Dates Table -->
                 <section class="py-6" id="departures">
@@ -840,6 +690,7 @@
                     <div class="">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12">
                             <!-- Route Map -->
+                            @if($data->trip_map)
                             <div id="route-map">
                                 <div class="flex justify-between items-center mb-6">
                                     <h2 class="text-2xl font-bold text-gray-900">Route Map</h2>
@@ -848,13 +699,14 @@
                                         <i class="fas fa-download mr-2"></i> Download </button>
                                 </div>
                                 <div class="rounded-xl overflow-hidden border  aspect-video">
-                                    <a href="assets/trip/map.jpg" data-fancybox="gallery"
+                                    <a href="{{ asset('uploads/original/'.$data->trip_map) }}" data-fancybox="gallery"
                                         data-caption="Everest Base Camp Trek Route Map">
-                                        <img src="assets/trip/map.jpg" alt="Route Map" loading="lazy"
+                                        <img src="{{ asset('uploads/original/'.$data->trip_map) }}" alt="Route Map" loading="lazy"
                                             class="lazy-image w-full h-auto">
                                     </a>
                                 </div>
                             </div>
+                            @endif
                             <!-- Video Section -->
                             <div id="video">
                                 <h2 class="text-2xl font-bold text-gray-900 mb-6">Trek Video</h2>
@@ -1110,13 +962,14 @@
                 </section>
                 <!-- end -->
                 <!-- faq -->
+                @if($faqs && count($faqs) > 0)
                 <section class="py-5" id="faqs">
                     <div class="">
                         <!-- FAQs -->
                         <div class="accordion-wrapper">
                             <div
                                 class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
-                                <h2 class="text-2xl font-bold text-gray-900">Everest Base Camp Trek FAQs
+                                <h2 class="text-2xl font-bold text-gray-900">{{ $data->trip_title }} FAQs
                                 </h2>
                                 <button
                                     class="toggle-accordion text-brand-400 border border-brand-400 hover:bg-brand-50 transition-colors font-medium rounded-xl text-sm px-4 py-2.5 transition shadow-sm">Expand
@@ -1124,208 +977,30 @@
                             </div>
                             <div id="accordion-card" data-accordion="collapse">
                                 <!-- FAQ 1 -->
-                                <div id="accordion-card-heading-1">
+                                @foreach($faqs as $key => $value)
+                                      <div id="accordion-card-heading-{{ $key+1 }}">
                                     <button type="button"
                                         class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-                                        data-accordion-target="#accordion-card-body-1" aria-expanded="false"
-                                        aria-controls="accordion-card-body-1">
-                                        <span>Why should I choose Summit8000 for the Everest Base Camp Trek?</span>
+                                        data-accordion-target="#accordion-card-body-{{ $key+1 }}" aria-expanded="false"
+                                        aria-controls="accordion-card-body-{{ $key+1 }}">
+                                        <span>{{ $value->title }}</span>
                                         <i data-accordion-icon
                                             class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
                                     </button>
                                 </div>
-                                <div id="accordion-card-body-1"
+                                <div id="accordion-card-body-{{ $key+1 }}"
                                     class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
-                                    aria-labelledby="accordion-card-heading-1">
-                                    <div class="p-4 text-body"> With over 17 years of experience, licensed Sherpa guides
-                                        from the Khumbu region, personalized service, assured safety, and thousands of
-                                        five-star reviews, Summit8000 offers an authentic and well-supported Everest
-                                        Base Camp trekking experience. :contentReference[oaicite:1]{index=1} </div>
+                                    aria-labelledby="accordion-card-heading-{{ $key+1 }}">
+                                    <div class="p-4 text-body"> {{ $value->content }} </div>
                                 </div>
-                                <!-- FAQ 2 -->
-                                <div id="accordion-card-heading-2" class="mt-4">
-                                    <button type="button"
-                                        class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-                                        data-accordion-target="#accordion-card-body-2" aria-expanded="false"
-                                        aria-controls="accordion-card-body-2">
-                                        <span>What is the group size for the Everest Base Camp Trek? Is Departures
-                                            guaranteed?</span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
-                                    </button>
-                                </div>
-                                <div id="accordion-card-body-2"
-                                    class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
-                                    aria-labelledby="accordion-card-heading-2">
-                                    <div class="p-4 text-body"> The trek typically hosts 2–10 trekkers (average ~8), and
-                                        Departuress are **guaranteed** regardless of group size. Solo travelers can also
-                                        opt for a personalized trek. :contentReference[oaicite:2]{index=2} </div>
-                                </div>
-                                <!-- FAQ 3 -->
-                                <div id="accordion-card-heading-3" class="mt-4">
-                                    <button type="button"
-                                        class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-                                        data-accordion-target="#accordion-card-body-3" aria-expanded="false"
-                                        aria-controls="accordion-card-body-3">
-                                        <span>Where will I stay in Kathmandu? Can I upgrade the hotel?</span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
-                                    </button>
-                                </div>
-                                <div id="accordion-card-body-3"
-                                    class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
-                                    aria-labelledby="accordion-card-heading-3">
-                                    <div class="p-4 text-body"> The package includes a 3-star hotel in Thamel (e.g.,
-                                        Woodapple Hotel & Spa). You **can upgrade** to 4- or 5-star accommodations at
-                                        extra cost. :contentReference[oaicite:3]{index=3} </div>
-                                </div>
-                                <!-- FAQ 4 -->
-                                <div id="accordion-card-heading-4" class="mt-4">
-                                    <button type="button"
-                                        class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-                                        data-accordion-target="#accordion-card-body-4" aria-expanded="false"
-                                        aria-controls="accordion-card-body-4">
-                                        <span>How much does an extra night’s accommodation in Kathmandu cost?</span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
-                                    </button>
-                                </div>
-                                <div id="accordion-card-body-4"
-                                    class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
-                                    aria-labelledby="accordion-card-heading-4">
-                                    <div class="p-4 text-body"> Extra nights cost approximately **USD 45 single** or
-                                        **USD 50 twin/double**, including breakfast and taxes.
-                                        :contentReference[oaicite:4]{index=4} </div>
-                                </div>
-                                <!-- FAQ 5 -->
-                                <div id="accordion-card-heading-5" class="mt-4">
-                                    <button type="button"
-                                        class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-                                        data-accordion-target="#accordion-card-body-5" aria-expanded="false"
-                                        aria-controls="accordion-card-body-5">
-                                        <span>What happens during the pre-trek briefing in Kathmandu?</span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
-                                    </button>
-                                </div>
-                                <div id="accordion-card-body-5"
-                                    class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
-                                    aria-labelledby="accordion-card-heading-5">
-                                    <div class="p-4 text-body"> You meet your guide, hand over passport/insurance
-                                        details, finalize balance, and receive gear — down jacket, sleeping bag, cap,
-                                        trek map, and duffel bag — and can ask any questions. </div>
-                                </div>
-                                <!-- FAQ 6 -->
-                                <div id="accordion-card-heading-6" class="mt-4">
-                                    <button type="button"
-                                        class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-                                        data-accordion-target="#accordion-card-body-6" aria-expanded="false"
-                                        aria-controls="accordion-card-body-6">
-                                        <span>How do I book and pay for the Everest Base Camp Trek?</span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
-                                    </button>
-                                </div>
-                                <div id="accordion-card-body-6"
-                                    class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
-                                    aria-labelledby="accordion-card-heading-6">
-                                    <div class="p-4 text-body"> Booking requires filling trip info and paying a **20%
-                                        deposit** to confirm. Remaining balance can be paid in Kathmandu by card or
-                                        cash. </div>
-                                </div>
-                                <!-- FAQ 7 -->
-                                <div id="accordion-card-heading-7" class="mt-4">
-                                    <button type="button"
-                                        class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-                                        data-accordion-target="#accordion-card-body-7" aria-expanded="false"
-                                        aria-controls="accordion-card-body-7">
-                                        <span>Can I store extra luggage in Kathmandu?</span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
-                                    </button>
-                                </div>
-                                <div id="accordion-card-body-7"
-                                    class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
-                                    aria-labelledby="accordion-card-heading-7">
-                                    <div class="p-4 text-body"> Yes — you can store extra luggage at your Kathmandu
-                                        hotel for free and retrieve it when you return from the trek.
-                                        :contentReference[oaicite:7]{index=7} </div>
-                                </div>
-                                <!-- FAQ 8 -->
-                                <div id="accordion-card-heading-8" class="mt-4">
-                                    <button type="button"
-                                        class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-                                        data-accordion-target="#accordion-card-body-8" aria-expanded="false"
-                                        aria-controls="accordion-card-body-8">
-                                        <span>Do you provide trekking gear?</span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
-                                    </button>
-                                </div>
-                                <div id="accordion-card-body-8"
-                                    class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
-                                    aria-labelledby="accordion-card-heading-8">
-                                    <div class="p-4 text-body"> Yes — sleeping bag, down jacket, duffel bag, trek map,
-                                        T-shirt, and cap are provided. :contentReference[oaicite:8]{index=8} </div>
-                                </div>
-                                <!-- FAQ 9 -->
-                                <div id="accordion-card-heading-9" class="mt-4">
-                                    <button type="button"
-                                        class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-                                        data-accordion-target="#accordion-card-body-9" aria-expanded="false"
-                                        aria-controls="accordion-card-body-9">
-                                        <span>What accommodation is available on the trek?</span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
-                                    </button>
-                                </div>
-                                <div id="accordion-card-body-9"
-                                    class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
-                                    aria-labelledby="accordion-card-heading-9">
-                                    <div class="p-4 text-body"> You stay in twin-sharing lodges with proper beds and
-                                        private bathrooms lower down. Higher up, rooms become simpler with shared
-                                        toilets. :contentReference[oaicite:9]{index=9} </div>
-                                </div>
-                                <!-- FAQ 10 -->
-                                <div id="accordion-card-heading-10" class="mt-4">
-                                    <button type="button"
-                                        class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-                                        data-accordion-target="#accordion-card-body-10" aria-expanded="false"
-                                        aria-controls="accordion-card-body-10">
-                                        <span>Is there Wi-Fi and phone connectivity on the trek?</span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
-                                    </button>
-                                </div>
-                                <div id="accordion-card-body-10"
-                                    class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
-                                    aria-labelledby="accordion-card-heading-10">
-                                    <div class="p-4 text-body"> Yes — Wi-Fi and phone data are available at most
-                                        teahouses (paid). You can buy local SIM or data from Everest Link/Ncell.
-                                        :contentReference[oaicite:10]{index=10} </div>
-                                </div>
-                                <!-- FAQ 11 -->
-                                <div id="accordion-card-heading-11" class="mt-4">
-                                    <button type="button"
-                                        class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-                                        data-accordion-target="#accordion-card-body-11" aria-expanded="false"
-                                        aria-controls="accordion-card-body-11">
-                                        <span>Can I charge my devices on the trek?</span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
-                                    </button>
-                                </div>
-                                <div id="accordion-card-body-11"
-                                    class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
-                                    aria-labelledby="accordion-card-heading-11">
-                                    <div class="p-4 text-body"> Yes — charging is available at most teahouses (fee).
-                                        Weather at high altitude can affect power so carry a power bank too.
-                                        :contentReference[oaicite:11]{index=11} </div>
-                                </div>
+                                @endforeach
+                              
+                                 
                             </div>
                         </div>
                     </div>
                 </section>
+                @endif
                 <!-- end faq -->
                 <div class="sticky bottom-0 left-0 z-30 w-full h-16 bg-neutral-primary-soft border-t border-default">
                     <div class="grid h-full max-w-xl grid-cols-2 mx-auto font-medium items-center px-4 gap-5">
