@@ -327,7 +327,7 @@
                 <section class="rounded-xl p-5 bg-brand-50  text-gray-700" id="WhyWithSummit8000"> 
                     <div class=" space-y-3">
                         <h2 class="text-2xl font-bold text-brand-400">Why with Summit 8000?</h2>
-                        <p>ecause Summit 8000 is a trekking and expedition company built on experience, passion, and a
+                        <p>Because Summit 8000 is a trekking and expedition company built on experience, passion, and a
                             commitment to safety. It combines expert local knowledge with personalized service to guide
                             adventurers through some of the world’s most breathtaking and challenging landscapes,
                             ensuring every journey is well-planned, culturally respectful, and unforgettable—from the
