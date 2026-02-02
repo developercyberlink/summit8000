@@ -38,36 +38,62 @@
         <div class="flex flex-col lg:flex-row gap-9">
             <div class="w-full lg:w-2/3 ">
                 <div class="grid grid-cols-1 gap-4">
-                    {{-- @foreach ($photos as $photo)
-                    <div>
-                        <a href="{{ asset('/uploads/original/' . $photo->thumbnail) }}" data-fancybox="trip-gallery" data-caption="Caption">
-                            <div class="relative rounded-2xl overflow-hidden group cursor-pointer h-full md:h-[480px]">
-                                <img src="assets/trip/8000.jpg" alt="Everest Base Camp" loading="lazy"
-                                    class="lazy-image w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
-                                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors">
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    @endforeach --}}
-                    <div class="grid grid-cols-3 gap-4">
-                         @foreach ($photos as $photo)
-                        <div>
-                            <a href="{{ asset('/uploads/original/' . $photo->thumbnail) }}" data-fancybox="trip-gallery" data-caption="Caption">
-                                <div
-                                    class="relative rounded-2xl overflow-hidden group cursor-pointer h-full aspect-video">
-                                    <img src="{{ asset('/uploads/original/' . $photo->thumbnail) }}" alt="Prayer Flags" loading="lazy"
-                                        class="lazy-image w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
-                                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors">
+                    @foreach ($photos as $key => $photo)
+                        @if ($key === 0)
+                            <div>
+                                <a href="{{$photo->thumbnail ? asset('theme-assets/assets/trip/8000.jpg') : asset('/uploads/original/' . $photo->thumbnail)}}" data-fancybox="trip-gallery" data-caption="{{ $photo->title }}">
+                                    <div class="relative rounded-2xl overflow-hidden group cursor-pointer h-full md:h-[480px]">
+                                        <img src="{{asset('theme-assets/assets/trip/8000.jpg')}}" alt="{{ $photo->title }}" loading="lazy"
+                                            class="lazy-image w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors">
+                                        </div>
                                     </div>
+                                </a>
+                            </div>
+                        @endif
+                    @endforeach
+                    <div class="grid grid-cols-3 gap-4">
+                        @foreach ($photos as $key => $photo)
+                            @if ($key > 0 && $key <= 3)
+                                <div class="relative">
+                                    <a href="{{ $photo->thumbnail ? asset('/uploads/original/' . $photo->thumbnail) : asset('theme-assets/assets/trip/8000.jpg') }}"
+                                    data-fancybox="trip-gallery"
+                                    data-caption="{{ $photo->title }}">
+
+                                        <div class="relative rounded-2xl overflow-hidden group cursor-pointer h-full aspect-video">
+                                            <img src="{{ $photo->thumbnail ? asset('/uploads/original/' . $photo->thumbnail) : asset('theme-assets/assets/trip/8000.jpg') }}"
+                                                alt="{{ $photo->title }}"
+                                                loading="lazy"
+                                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+
+                                            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+
+                                            @if ($key === 3 && count($photos) > 4)
+                                                <div class="absolute inset-0 flex items-end justify-end p-4">
+                                                    <span
+                                                        class="bg-white/95 text-sm text-blue-500 px-4 py-2 rounded-full hover:shadow-xl transition-all">
+                                                        View All ({{ count($photos) }})
+                                                    </span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
+                            @endif
                         @endforeach
-                      
                     </div>
                 </div>
+                @foreach ($photos as $key => $photo)
+                    @if ($key > 3)
+                        <a href="{{ asset('/uploads/original/' . $photo->thumbnail) }}"
+                        data-fancybox="trip-gallery"
+                        data-caption="{{ $photo->title }}"
+                        class="hidden">
+                        </a>
+                    @endif
+                @endforeach
             </div>
+
             <div class="w-full lg:w-1/3">
                 <div class=" space-y-8">
                     <!-- Price Card -->
@@ -129,12 +155,12 @@
                                     <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1"> All
                                         Inclusive Price </p>
                                     <div class="flex items-baseline justify-start mb-2">
-                                        <span id="price" class="text-4xl font-extrabold text-blue-600">$1525</span>
+                                        <span id="price" class="text-4xl font-extrabold text-blue-600">${{$data->price}}</span>
                                         <span class="text-lg font-bold text-gray-500 ml-2">USD</span>
                                     </div>
                                     <!-- Duration -->
                                     <p class="text-sm text-gray-500 flex items-center  ">
-                                        <i class="far fa-clock mr-2"></i> 15 Nights 16 Days
+                                        <i class="far fa-clock mr-2"></i> {{$data->walking_per_day}}
                                     </p>
                                 </div>
                                 <div class="flex flex-col gap-3 w-full">
@@ -350,108 +376,48 @@
                                 class="rounded-base border border-default overflow-hidden shadow-xs">
                                 <!--  -->
                                 @foreach($itinerary as $key => $value)
-                                <div id="heading-{{ $key+1 }}">
-                                    <button type="button"
-                                        class="flex items-center justify-between w-full p-5 font-semibold  rtl:text-right text-base rounded-t-base border border-t-0 border-x-0 border-b-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 text-left"
-                                        data-accordion-target="#body-{{ $key+1 }}" aria-expanded="true" aria-controls="body-{{$key+1}}">
-                                        <span class="text-brand-900">
-                                            <span class="text-brand-400 mr-1">Day {{ $value->days }}:</span> 
-                                            {{ $value->title }}</span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400 text-sm text-brand-400"></i>
-                                    </button>
-                                </div>
-                                <div id="body-{{ $key+1}}" class="hidden border border-s-0 border-e-0 border-t-0 border-b-default"
-                                    aria-labelledby="heading-{{ $key+1 }}">
-                                    <div
-                                        class="space-y-3 py-5 text-base font-normal text-gray-700 p-4 md:p-5 p-4 md:p-5">
-                                        <p>Welcome to Nepal! Upon arrival at Tribhuvan International Airport - TIA,
-                                            you'll complete immigration and baggage collection before exiting the
-                                            terminal. One of our representatives will be waiting outside the airport
-                                            with a placard reading “Nepal Hiking Team” and will provide you with a
-                                            transfer to your hotel.</p>
-                                        <p>The ride into the city gives you a first, honest look at Kathmandu as people
-                                            go about their day, shops open their doors, and traffic weaves through the
-                                            streets.</p>
-                                        <div class="flex items-start   p-4 mb-4 text-sm text-fg-brand-strong rounded-base bg-brand-50"
-                                            role="alert">
-                                            <i class="fa fa-info-circle me-2 shrink-0 mt-0.5 sm:mt-0"></i>
-                                            <p>You can weigh your handbag and duffel bag at the hotel. Lukla flights
-                                                allow a combined 15 kg for hand luggage and a duffel bag. Excess baggage
-                                                costs approximately NPR 150 per kilogram, subject to airline approval.
-                                                Due to strict safety rules for small aircraft, additional weight may be
-                                                limited or denied, regardless of payment. These restrictions ensure safe
-                                                operations on Lukla’s short, high-altitude airstrip. </p>
-                                        </div>
+                                    <div id="heading-{{ $key+1 }}">
+                                        <button type="button"
+                                            class="flex items-center justify-between w-full p-5 font-semibold  rtl:text-right text-base rounded-t-base border border-t-0 border-x-0 border-b-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 text-left"
+                                            data-accordion-target="#body-{{ $key+1 }}" aria-expanded="true" aria-controls="body-{{$key+1}}">
+                                            <span class="text-brand-900">
+                                                <span class="text-brand-400 mr-1">Day {{ $value->days }}:</span> 
+                                                {{ $value->title }}</span>
+                                            <i data-accordion-icon
+                                                class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400 text-sm text-brand-400"></i>
+                                        </button>
+                                    </div>
+                                    <div id="body-{{ $key+1}}" class="hidden border border-s-0 border-e-0 border-t-0 border-b-default" aria-labelledby="heading-{{ $key+1 }}">
                                         <div
-                                            class="flex flex-wrap gap-4 mt-4 text-sm text-fg-brand-strong rounded-full bg-brand-100 p-1">
-                                            <div class="flex items-center">
-                                                <span
-                                                    class="  text-gray-900 px-2 py-0.5 rounded mr-2 text-sm">Accommodation:</span>
-                                                <span class="font-semibold">Hotel</span>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <span
-                                                    class="  text-gray-900 px-2 py-0.5 rounded mr-2 text-sm">Meals:</span>
-                                                <span class="font-semibold">Breakfast Included</span>
+                                            class="space-y-3 py-5 text-base font-normal text-gray-700 p-4 md:p-5 p-4 md:p-5">
+                                            <p>
+                                                {!! $value->content !!}
+                                            </p>
+                                            @if($value->extra_info)
+                                                <div class="flex items-start   p-4 mb-4 text-sm text-fg-brand-strong rounded-base bg-brand-50"
+                                                    role="alert">
+                                                    <i class="fa fa-info-circle me-2 shrink-0 mt-0.5 sm:mt-0"></i>
+                                                    <p>
+                                                        {{ $value->extra_info }}
+                                                    </p>
+                                                </div>
+                                            @endif
+                                            <div
+                                                class="flex flex-wrap gap-4 mt-4 text-sm text-fg-brand-strong rounded-full bg-brand-100 p-1">
+                                                <div class="flex items-center">
+                                                    <span
+                                                        class="  text-gray-900 px-2 py-0.5 rounded mr-2 text-sm">Accommodation:</span>
+                                                    <span class="font-semibold">{{ $value->max_altitude }}</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <span
+                                                        class="  text-gray-900 px-2 py-0.5 rounded mr-2 text-sm">Meals:</span>
+                                                    <span class="font-semibold">{{ $value->duration }}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 @endforeach
-                                <!--  -->
-                                {{-- <!-- Day 2 -->
-                                <div id="heading-2">
-                                    <button type="button"
-                                        class="flex items-center justify-between w-full p-5 font-semibold  rtl:text-right text-base rounded-t-base border border-t-0 border-x-0 border-b-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 text-left"
-                                        data-accordion-target="#body-2" aria-expanded="false" aria-controls="body-2">
-                                        <span class="text-brand-900">
-                                            <span class="text-brand-400 mr-1">Day 2:</span> Free Day in Kathmandu – Trip
-                                            Briefing and Trek Preparation </span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
-                                    </button>
-                                </div>
-                                <div id="body-2" class="hidden border border-s-0 border-e-0 border-t-0 border-b-default"
-                                    aria-labelledby="heading-2">
-                                    <div class="space-y-3 py-5 text-base font-normal text-gray-700 p-4 md:p-5">
-                                        <p> Today is reserved for rest and final preparation. You will attend a detailed
-                                            trek briefing where your guide explains the route, altitude concerns, and
-                                            safety measures. </p>
-                                        <p> Equipment check and last-minute shopping can be done in Thamel. Overnight in
-                                            Kathmandu. </p>
-                                        <div
-                                            class="flex flex-wrap gap-4 mt-4 text-sm text-fg-brand-strong rounded-full bg-brand-100 p-1">
-                                            <div class="flex items-center">
-                                                <span class="text-gray-900 px-2 py-0.5 mr-2">Accommodation:</span>
-                                                <span class="font-semibold">Hotel</span>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <span class="text-gray-900 px-2 py-0.5 mr-2">Meals:</span>
-                                                <span class="font-semibold">Breakfast Included</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                    <div class="space-y-3 py-5 text-base font-normal text-gray-700 p-4 md:p-5">
-                                        <p> Early morning scenic flight to Lukla, one of the most adventurous airstrips
-                                            in the world. Meet the trekking crew and begin your walk. </p>
-                                        <p> The trail follows the Dudh Koshi River to Phakding, passing mani stones and
-                                            suspension bridges. </p>
-                                        <div
-                                            class="flex flex-wrap gap-4 mt-4 text-sm text-fg-brand-strong rounded-full bg-brand-100 p-1">
-                                            <div class="flex items-center">
-                                                <span class="text-gray-900 px-2 py-0.5 mr-2">Accommodation:</span>
-                                                <span class="font-semibold">Teahouse</span>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <span class="text-gray-900 px-2 py-0.5 mr-2">Meals:</span>
-                                                <span class="font-semibold">Breakfast, Lunch & Dinner</span>
-                                            </div>
-                                        </div>
-                                    </div> --}}
-                 
                             </div>
                         </div>
                         <div>
@@ -469,7 +435,7 @@
                                         </svg>
                                         <span class="sr-only">Info</span>
                                         <div>
-                                            <h3 class="font-medium">If the above Everest Base Camp Trek itinerary does
+                                            <h3 class="font-medium">If the above {{ $data->trip_title }} itinerary does
                                                 not meet your needs, we can design individualized travel plans based on
                                                 your preferences and specifications.</h3>
                                             <a href="customized-trip.php" class="hidden sm:inline-flex text-white bg-brand-400 hover:bg-brand-500 mt-2
@@ -491,21 +457,18 @@
                                 <h2 class="text-2xl font-bold text-gray-900 mb-8">Cost Includes</h2>
                                 <div class="space-y-8">
                                     <div>
-                                        <h3 class="font-bold text-sm uppercase text-brand-900 mb-4 tracking-wider">
-                                            Accommodation </h3>
+                                        {{-- <h3 class="font-bold text-sm uppercase text-brand-900 mb-4 tracking-wider">
+                                            Accommodation </h3> --}}
                                         <ul class="space-y-3 text-sm">
                                             @foreach($cost_includes as $key => $value)
-                                                
-                                            <li class="flex items-start">
-                                                <i class="far fa-check-circle text-green-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>
-                                                    <span >
-                                                        {{ $value->title }}
-                                                </span>
-                                            </li>
+                                                <li class="flex items-start">
+                                                    <i class="far fa-check-circle text-green-500 mt-1 mr-3 shrink-0"></i>
+                                                    <span>
+                                                        <span >
+                                                            {{ $value->title }}
+                                                    </span>
+                                                </li>
                                             @endforeach
-
-                                          
                                         </ul>
                                     </div>
                                
@@ -516,13 +479,12 @@
                                 <div class="space-y-8">
                                     <div>
                                         <ul class="space-y-3 text-sm">
-                                    @foreach($cost_excludes as $key => $value)
-
-                                            <li class="flex items-start">
-                                                <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
-                                                <span>{{ $value->title }}</span>
-                                            </li>
-                                       @endforeach
+                                            @foreach($cost_excludes as $key => $value)
+                                                <li class="flex items-start">
+                                                    <i class="far fa-times-circle text-red-500 mt-1 mr-3 shrink-0"></i>
+                                                    <span>{{ $value->title }}</span>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
@@ -548,7 +510,7 @@
                                 options.
                             </div>
                             <div class="relative overflow-x-auto border rounded-xl shadow-sm">
-                                <form class="p-4  bg-white border-b gap-4">
+                                {{-- <form class="p-4  bg-white border-b gap-4">
                                     <select
                                         class="block md:w-3xl bg-gray-50  px-4 max-w-4xl py-2 text-xs border rounded-lg focus:ring-2 focus:ring-brand-400 outline-0 pr-12">
                                         <option>Select Month, Year</option>
@@ -577,7 +539,7 @@
                                         <option value="2027-10">Oct, 2027</option>
                                         <option value="2027-11">Nov, 2027</option>
                                     </select>
-                                </form>
+                                </form> --}}
                                 <div class="Departures-list bg-white shadow-base py-3">
                                     <!--  -->
                                     <ul class="[&amp;&gt;li+li]:border-t [&amp;&gt;li+li]:border-t-border">
@@ -685,44 +647,46 @@
                     </div>
                 </section>
                 <!-- end -->
+
                 <!-- video and map -->
                 <section class="py-6" id="RouteMapVideo">
                     <div class="">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12">
                             <!-- Route Map -->
                             @if($data->trip_map)
-                            <div id="route-map">
-                                <div class="flex justify-between items-center mb-6">
-                                    <h2 class="text-2xl font-bold text-gray-900">Route Map</h2>
-                                    <button
-                                        class="text-gray-500 border px-4 py-1.5 rounded-md text-xs flex items-center hover:bg-brand-400 hover:text-white hover:border-brand-400">
-                                        <i class="fas fa-download mr-2"></i> Download </button>
-                                </div>
-                                <div class="rounded-xl overflow-hidden border  aspect-video">
-                                    <a href="{{ asset('uploads/original/'.$data->trip_map) }}" data-fancybox="gallery"
-                                        data-caption="Everest Base Camp Trek Route Map">
-                                        <img src="{{ asset('uploads/original/'.$data->trip_map) }}" alt="Route Map" loading="lazy"
-                                            class="lazy-image w-full h-auto">
-                                    </a>
-                                </div>
-                            </div>
-                            @endif
-                            <!-- Video Section -->
-                            <div id="video">
-                                <h2 class="text-2xl font-bold text-gray-900 mb-6">Trek Video</h2>
-                                <div
-                                    class="relative group cursor-pointer rounded-2xl overflow-hidden shadow-2xl aspect-video">
-                                    <img src="https://i.ytimg.com/vi/bFy6jTEHlzQ/hqdefault.jpg" alt="Video"
-                                        loading="lazy" class="lazy-image w-full h-full object-cover">
-                                    <div
-                                        class="absolute inset-0 bg-black/20 flex items-center justify-center transition group-hover:bg-black/40">
-                                        <a href="https://www.youtube.com/watch?v=bFy6jTEHlzQ" data-fancybox
-                                            class="w-20 h-20 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/50 group-hover:scale-110 transition duration-300">
-                                            <i class="fas fa-play text-white text-3xl ml-1"></i>
+                                <div id="route-map">
+                                    <div class="flex justify-between items-center mb-6">
+                                        <h2 class="text-2xl font-bold text-gray-900">Route Map</h2>
+
+                                        <a href="{{ asset('uploads/original/'.$data->trip_map) }}"
+                                        download class="text-gray-500 border px-4 py-1.5 rounded-md text-xs flex items-center hover:bg-brand-400 hover:text-white hover:border-brand-400">
+                                            <i class="fas fa-download mr-2"></i> Download
+                                        </a>
+                                    </div>
+                                    <div class="rounded-xl overflow-hidden border  aspect-video">
+                                        <a href="{{ asset('uploads/original/'.$data->trip_map) }}" data-fancybox="gallery"
+                                            data-caption="{{$data->trip_title}} Route Map">
+                                            <img src="{{ asset('uploads/original/'.$data->trip_map) }}" alt="{{$data->trip_title}}" loading="lazy"
+                                                class="lazy-image w-full h-auto">
                                         </a>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
+                            <!-- Video Section -->
+                            @if($data->trip_video)
+                                <div id="video">
+                                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Trek Video</h2>
+                                    <div class="relative group cursor-pointer rounded-2xl overflow-hidden shadow-2xl aspect-video">
+                                        <img src="https://i.ytimg.com/vi/{{$data->trip_video}}/hqdefault.jpg" alt="{{$data->trip_title}}" loading="lazy" class="lazy-image w-full h-full object-cover">
+                                        <div class="absolute inset-0 bg-black/20 flex items-center justify-center transition group-hover:bg-black/40">
+                                            <a href="https://www.youtube.com/watch?v={{$data->trip_video}}" data-fancybox
+                                                class="w-20 h-20 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/50 group-hover:scale-110 transition duration-300">
+                                                <i class="fas fa-play text-white text-3xl ml-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </section>
@@ -732,56 +696,14 @@
                     <div class=" space-y-3">
                         <div class="mb-8" id="gears">
                             <h2 class="text-2xl font-bold text-gray-900 mb-6">Gears List</h2>
-                            <p class="font-bold text-lg mb-4">You must bring the following items:</p>
-                            <ul class="show-more-list grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8" data-visible="1">
-                                <li class="flex items-center space-x-1 text-base">
-                                    <i class="far fa-check-circle text-brand-400"></i>
-                                    <span>Hiking boots (must be waterproof)</span>
-                                </li>
-                                <li class="flex items-center space-x-1 text-base">
-                                    <i class="far fa-check-circle text-brand-400"></i>
-                                    <span>Trekking poles (see notes)</span>
-                                </li>
-                                <li class="flex items-center space-x-1 text-base">
-                                    <i class="far fa-check-circle text-brand-400"></i>
-                                    <span>Microspikes (Kahtoola or similar) footwear traction (see notes)</span>
-                                </li>
-                                <li class="flex items-center space-x-1 text-base">
-                                    <i class="far fa-check-circle text-brand-400"></i>
-                                    <span>Trekking trousers</span>
-                                </li>
-                                <li class="flex items-center space-x-1 text-base">
-                                    <i class="far fa-check-circle text-brand-400"></i>
-                                    <span>Waterproof overtrousers</span>
-                                </li>
-                            </ul>
-                            <p class="font-bold text-lg mb-4">The following items are optional:</p>
-                            <ul class="show-more-list grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8" data-visible="1">
-                                <li class="flex items-center space-x-1 text-base">
-                                    <i class="far fa-check-circle text-brand-400"></i>
-                                    <span>Trainers or similar for use in lodges</span>
-                                </li>
-                                <li class="flex items-center space-x-1 text-base">
-                                    <i class="far fa-check-circle text-brand-400"></i>
-                                    <span>Swimwear (for the hotel pool in Kathmandu)</span>
-                                </li>
-                                <li class="flex items-center space-x-1 text-base">
-                                    <i class="far fa-check-circle text-brand-400"></i>
-                                    <span>Earplugs (particularly if you are not eh one snoring)</span>
-                                </li>
-                                <li class="flex items-center space-x-1 text-base">
-                                    <i class="far fa-check-circle text-brand-400"></i>
-                                    <span>Pen-knife (remember to pack sharp objects in hold baggage)</span>
-                                </li>
-                                <li class="flex items-center space-x-1 text-base">
-                                    <i class="far fa-check-circle text-brand-400"></i>
-                                    <span>Reusable cloth bag for shopping (to avoid plastic bags)</span>
-                                </li>
-                            </ul>
+                            <p >
+                                {!! $data->trip_highlight !!}
+                            </p>
                         </div>
                     </div>
                 </section>
                 <!-- end -->
+
                 <!-- review -->
                 <section class="py-6" id="reviews">
                     <div class="">
@@ -961,47 +883,47 @@
                     </div>
                 </section>
                 <!-- end -->
+
                 <!-- faq -->
                 @if($faqs && count($faqs) > 0)
-                <section class="py-5" id="faqs">
-                    <div class="">
-                        <!-- FAQs -->
-                        <div class="accordion-wrapper">
-                            <div
-                                class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
-                                <h2 class="text-2xl font-bold text-gray-900">{{ $data->trip_title }} FAQs
-                                </h2>
-                                <button
-                                    class="toggle-accordion text-brand-400 border border-brand-400 hover:bg-brand-50 transition-colors font-medium rounded-xl text-sm px-4 py-2.5 transition shadow-sm">Expand
-                                    All</button>
-                            </div>
-                            <div id="accordion-card" data-accordion="collapse">
-                                <!-- FAQ 1 -->
-                                @foreach($faqs as $key => $value)
-                                      <div id="accordion-card-heading-{{ $key+1 }}">
-                                    <button type="button"
-                                        class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
-                                        data-accordion-target="#accordion-card-body-{{ $key+1 }}" aria-expanded="false"
-                                        aria-controls="accordion-card-body-{{ $key+1 }}">
-                                        <span>{{ $value->title }}</span>
-                                        <i data-accordion-icon
-                                            class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
-                                    </button>
+                    <section class="py-5" id="faqs">
+                        <div class="">
+                            <!-- FAQs -->
+                            <div class="accordion-wrapper">
+                                <div
+                                    class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
+                                    <h2 class="text-2xl font-bold text-gray-900">{{ $data->trip_title }} FAQs
+                                    </h2>
+                                    <button
+                                        class="toggle-accordion text-brand-400 border border-brand-400 hover:bg-brand-50 transition-colors font-medium rounded-xl text-sm px-4 py-2.5 transition shadow-sm">Expand
+                                        All</button>
                                 </div>
-                                <div id="accordion-card-body-{{ $key+1 }}"
-                                    class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
-                                    aria-labelledby="accordion-card-heading-{{ $key+1 }}">
-                                    <div class="p-4 text-body"> {{ $value->content }} </div>
+                                <div id="accordion-card" data-accordion="collapse">
+                                    <!-- FAQ 1 -->
+                                    @foreach($faqs as $key => $value)
+                                        <div id="accordion-card-heading-{{ $key+1 }}">
+                                            <button type="button"
+                                                class="text-left flex items-center justify-between w-full p-4 font-medium text-body rounded-base shadow-xs border border-default hover:text-heading hover:bg-neutral-secondary-medium gap-3 [&[aria-expanded='true']]:rounded-b-none [&[aria-expanded='true']]:shadow-none"
+                                                data-accordion-target="#accordion-card-body-{{ $key+1 }}" aria-expanded="false"
+                                                aria-controls="accordion-card-body-{{ $key+1 }}">
+                                                <span>{{ $value->title }}</span>
+                                                <i data-accordion-icon
+                                                    class=" fa fa-chevron-down transition-transform duration-300 rotate-90 text-sm text-brand-400"></i>
+                                            </button>
+                                        </div>
+                                        <div id="accordion-card-body-{{ $key+1 }}"
+                                            class="hidden border border-t-0 border-default rounded-b-base shadow-xs"
+                                            aria-labelledby="accordion-card-heading-{{ $key+1 }}">
+                                            <div class="p-4 text-body"> {{ $value->content }} </div>
+                                        </div>
+                                    @endforeach
                                 </div>
-                                @endforeach
-                              
-                                 
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
                 @endif
                 <!-- end faq -->
+
                 <div class="sticky bottom-0 left-0 z-30 w-full h-16 bg-neutral-primary-soft border-t border-default">
                     <div class="grid h-full max-w-xl grid-cols-2 mx-auto font-medium items-center px-4 gap-5">
                         <div>
@@ -1016,6 +938,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- Section: Related -->
                 <section class="py-16  relative" id="SimilarTrips">
                     <div class="">
@@ -1027,120 +950,45 @@
                         <!-- Grid of Cards -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             <!--  -->
-                            <a href="trip-details.php"
-                                class="block bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 transition-transform hover:-translate-y-1">
-                                <div class="relative h-64 overflow-hidden">
-                                    <img src="assets/trip/2.jpg" alt="Everest" class="w-full h-full object-cover">
-                                </div>
-                                <div class="p-5">
-                                    <div class="flex items-center gap-1 mb-2">
-                                        <i class="fa fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fa fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fa fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fa fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fa fa-star-half text-yellow-400 text-xs"></i>
-                                        <span class="text-slate-400 text-xs ml-1">4.0 (10 reviews)</span>
+                            @foreach($similar_trips as $row)
+                                <a href="{{ url('page/' . tripurl($row->uri)) }}"
+                                    class="block bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 transition-transform hover:-translate-y-1">
+                                    <div class="relative h-64 overflow-hidden">
+                                        <img src="{{ $row->thumbnail ? asset('uploads/original/'.$row->thumbnail) : asset('theme-assets/assets/trip/2.jpg')}}" alt="{{$row->trip_title}}" class="w-full h-full object-cover">
                                     </div>
-                                    <h3 class="text-xl font-bold text-slate-900 mb-4">North Everest Express Expedition
-                                    </h3>
-                                    <div
-                                        class="flex justify-between items-center text-xs text-slate-500 mb-6 pb-6 border-b border-slate-100">
-                                        <span class="flex items-center gap-1 text-xs">
-                                            <img src="assets/icons/map-point.svg" class="h-4" alt=""> Nepal, Khumbu
-                                        </span>
-                                        <span class="flex items-center gap-1">
-                                            <img src="assets/icons/clock.svg" class="h-4" alt=""> 33 Days </span>
-                                        <span class="flex items-center gap-1">
-                                            <img src="assets/icons/spring.svg" class="h-4" alt=""> Spring </span>
-                                    </div>
-                                    <div class="flex justify-between items-end">
-                                        <div>
-                                            <p class="text-sm text-slate-400 font-medium">33 days from</p>
-                                            <p class="text-xl font-bold text-slate-900">US$ 999</p>
+                                    <div class="p-5">
+                                        <div class="flex items-center gap-1 mb-2">
+                                            <i class="fa fa-star text-yellow-400 text-xs"></i>
+                                            <i class="fa fa-star text-yellow-400 text-xs"></i>
+                                            <i class="fa fa-star text-yellow-400 text-xs"></i>
+                                            <i class="fa fa-star text-yellow-400 text-xs"></i>
+                                            <i class="fa fa-star-half text-yellow-400 text-xs"></i>
+                                            <span class="text-slate-400 text-xs ml-1">4.0 (10 reviews)</span>
                                         </div>
-                                        <button
-                                            class="text-white bg-brand-400 hover:bg-brand-500  font-medium rounded-xl text-sm px-5 py-3 transition shadow-sm">More
-                                            Info</button>
-                                    </div>
-                                </div>
-                            </a>
-                            <!--  -->
-                            <!--  -->
-                            <a href="trip-details.php"
-                                class="block bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 transition-transform hover:-translate-y-1">
-                                <div class="relative h-64 overflow-hidden">
-                                    <img src="assets/trip/3.jpg" alt="Everest" class="w-full h-full object-cover">
-                                </div>
-                                <div class="p-5">
-                                    <div class="flex items-center gap-1 mb-2">
-                                        <i class="fa fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fa fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fa fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fa fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fa fa-star-half text-yellow-400 text-xs"></i>
-                                        <span class="text-slate-400 text-xs ml-1">4.5 (500 reviews)</span>
-                                    </div>
-                                    <h3 class="text-xl font-bold text-slate-900 mb-4">Mt. K2 Expedition</h3>
-                                    <div
-                                        class="flex justify-between items-center text-xs text-slate-500 mb-6 pb-6 border-b border-slate-100">
-                                        <span class="flex items-center gap-1 text-xs">
-                                            <img src="assets/icons/map-point.svg" class="h-4" alt=""> Nepal, Khumbu
-                                        </span>
-                                        <span class="flex items-center gap-1">
-                                            <img src="assets/icons/clock.svg" class="h-4" alt=""> 40 Days </span>
-                                        <span class="flex items-center gap-1">
-                                            <img src="assets/icons/summer.svg" class="h-4" alt=""> Summer </span>
-                                    </div>
-                                    <div class="flex justify-between items-end">
-                                        <div>
-                                            <p class="text-sm text-slate-400 font-medium">40 days from</p>
-                                            <p class="text-xl font-bold text-slate-900">US$ 1599</p>
+                                        <h3 class="text-xl font-bold text-slate-900 mb-4">{{$row->trip_title}}
+                                        </h3>
+                                        <div
+                                            class="flex justify-between items-center text-xs text-slate-500 mb-6 pb-6 border-b border-slate-100">
+                                            <span class="flex items-center gap-1 text-xs">
+                                                <img src="{{asset('theme-assets/assets/icons/map-point.svg')}}" class="h-4"> Nepal
+                                            </span>
+                                            <span class="flex items-center gap-1">
+                                                <img src="{{asset('theme-assets/assets/icons/clock.svg')}}" class="h-4"> {{$row->duration}} </span>
+                                            <span class="flex items-center gap-1">
+                                                <img src="{{asset('theme-assets/assets/icons/spring.svg')}}" class="h-4"> {{$row->best_season}} </span>
                                         </div>
-                                        <button
-                                            class="text-white bg-brand-400 hover:bg-brand-500  font-medium rounded-xl text-sm px-5 py-3 transition shadow-sm">More
-                                            Info</button>
-                                    </div>
-                                </div>
-                            </a>
-                            <!--  -->
-                            <!--  -->
-                            <a href="trip-details.php"
-                                class="block bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 transition-transform hover:-translate-y-1">
-                                <div class="relative h-64 overflow-hidden">
-                                    <img src="assets/trip/2.jpg" alt="Everest" class="w-full h-full object-cover">
-                                </div>
-                                <div class="p-5">
-                                    <div class="flex items-center gap-1 mb-2">
-                                        <i class="fa fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fa fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fa fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fa fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fa fa-star-half text-yellow-400 text-xs"></i>
-                                        <span class="text-slate-400 text-xs ml-1">4.0 (10 reviews)</span>
-                                    </div>
-                                    <h3 class="text-xl font-bold text-slate-900 mb-4">North Everest Express Expedition
-                                    </h3>
-                                    <div
-                                        class="flex justify-between items-center text-xs text-slate-500 mb-6 pb-6 border-b border-slate-100">
-                                        <span class="flex items-center gap-1 text-xs">
-                                            <img src="assets/icons/map-point.svg" class="h-4" alt=""> Nepal, Khumbu
-                                        </span>
-                                        <span class="flex items-center gap-1">
-                                            <img src="assets/icons/clock.svg" class="h-4" alt=""> 33 Days </span>
-                                        <span class="flex items-center gap-1">
-                                            <img src="assets/icons/spring.svg" class="h-4" alt=""> Spring </span>
-                                    </div>
-                                    <div class="flex justify-between items-end">
-                                        <div>
-                                            <p class="text-sm text-slate-400 font-medium">33 days from</p>
-                                            <p class="text-xl font-bold text-slate-900">US$ 999</p>
+                                        <div class="flex justify-between items-end">
+                                            <div>
+                                                <p class="text-sm text-slate-400 font-medium">33 days from</p>
+                                                <p class="text-xl font-bold text-slate-900">US$ {{$row->price}}</p>
+                                            </div>
+                                            <button
+                                                class="text-white bg-brand-400 hover:bg-brand-500  font-medium rounded-xl text-sm px-5 py-3 transition shadow-sm">More
+                                                Info</button>
                                         </div>
-                                        <button
-                                            class="text-white bg-brand-400 hover:bg-brand-500  font-medium rounded-xl text-sm px-5 py-3 transition shadow-sm">More
-                                            Info</button>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            @endforeach
                             <!--  -->
                         </div>
                     </div>
@@ -1265,4 +1113,5 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('theme-assets/js/trip-details.js') }}"></script>
 @stop

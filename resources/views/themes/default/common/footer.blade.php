@@ -1,7 +1,7 @@
  <footer class="relative">
      <!-- Top Mountain Silhouette -->
      <div class="w-full overflow-hidden bg-transparent">
-         <img src="assets/footer/footer-mountains.svg" alt="Mountain Range" class="w-full object-cover h-auto">
+         <img src="{{asset('theme-assets/footer/footer-mountains.svg')}}" alt="Mountain Range" class="w-full object-cover h-auto">
      </div>
 
      <!-- Main Footer Section -->
@@ -12,7 +12,7 @@
                  <!-- Logo -->
                  <div class="flex items-center gap-2">
                      <div class="relative">
-                         <img src="assets/logo-white.svg" alt="Summit Logo Icon ">
+                         <img src="{{asset('theme-assets/logo-white.svg')}}" alt="Summit Logo Icon ">
                      </div>
                  </div>
                  <!-- Subscription Box -->
@@ -173,7 +173,7 @@
 
      <!-- Wavy Divider Transition -->
      <div class="w-full bg-summit-teal">
-         <img src="assets/footer/vector.svg" alt="Wavy Divider" class="w-full object-cover">
+         <img src="{{asset('theme-assets/footer/vector.svg')}}" alt="Wavy Divider" class="w-full object-cover">
      </div>
 
      <!-- White Background Associations Section -->
@@ -183,7 +183,7 @@
              <div>
                  <h4 class="text-gray-500 font-bold mb-6 text-sm">We Accept</h4>
                  <div class="flex flex-wrap gap-4 items-center">
-                     <img src="assets/online-pay.webp" alt="Sectigo" class="h-8">
+                     <img src="{{asset('theme-assets/online-pay.webp')}}" alt="Sectigo" class="h-8">
                  </div>
              </div>
 
@@ -191,12 +191,12 @@
              <div>
                  <h4 class="text-gray-500 font-bold mb-6 text-sm ">We are associated with</h4>
                  <div class="flex flex-wrap gap-6 items-center">
-                     <img src="assets/associated/ntb.webp" alt="NTB" class="h-10">
-                     <img src="assets/associated/taan.webp" alt="TAAN" class="h-10">
-                     <img src="assets/associated/himalayan-rescue-association.webp" alt="HRA" class="h-10">
-                     <img src="assets/associated/keep.webp" alt="KEEP" class="h-10">
-                     <img src="assets/associated/nepal-gov.webp" alt="Nepal Gov" class="h-10">
-                     <img src="assets/associated/nma.webp" alt="NMA" class="h-10">
+                     <img src="{{asset('theme-assets/associated/ntb.webp')}}" alt="NTB" class="h-10">
+                     <img src="{{asset('theme-assets/associated/taan.webp')}}" alt="TAAN" class="h-10">
+                     <img src="{{asset('theme-assets/associated/himalayan-rescue-association.webp')}}" alt="HRA" class="h-10">
+                     <img src="{{asset('theme-assets/associated/keep.webp')}}" alt="KEEP" class="h-10">
+                     <img src="{{asset('theme-assets/associated/nepal-gov.webp')}}" alt="Nepal Gov" class="h-10">
+                     <img src="{{asset('theme-assets/associated/nma.webp')}}" alt="NMA" class="h-10">
                  </div>
              </div>
 
@@ -205,26 +205,26 @@
                  <h4 class="text-gray-500 font-bold mb-6 text-sm ">Connect with us</h4>
                  <div class="flex gap-4">
                      <a href="#">
-                         <img src="assets/social/youtube.svg" alt=""
+                         <img src="{{asset('theme-assets/social/youtube.svg')}}" alt=""
                              class="w-8 h-8 rounded-full  flex items-center justify-center   hover:opacity-70 transition-opacity">
                      </a>
                      <a href="#">
-                         <img src="assets/social/instagram.svg" alt=""
+                         <img src="{{asset('theme-assets/social/instagram.svg')}}" alt=""
                              class="w-8 h-8 rounded-full  flex items-center justify-center   hover:opacity-70 transition-opacity">
                      </a>
                      <a href="#">
-                         <img src="assets/social/twitter.svg" alt=""
+                         <img src="{{asset('theme-assets/social/twitter.svg')}}" alt=""
                              class="w-8 h-8 rounded-full  flex items-center justify-center   hover:opacity-70 transition-opacity">
                      </a>
                      <a href="#">
-                         <img src="assets/social/facebook.svg" alt=""
+                         <img src="{{asset('theme-assets/social/facebook.svg')}}" alt=""
                              class="w-8 h-8 rounded-full  flex items-center justify-center   hover:opacity-70 transition-opacity">
                      </a>
                      <a href="#">
-                         <img src="assets/social/linkedIn.svg" alt=""
+                         <img src="{{asset('theme-assets/social/linkedIn.svg')}}" alt=""
                              class="w-8 h-8 rounded-full  flex items-center justify-center   hover:opacity-70 transition-opacity">
                      </a> <a href="#">
-                         <img src="assets/social/tiktok.svg" alt=""
+                         <img src="{{asset('theme-assets/social/tiktok.svg')}}" alt=""
                              class="w-8 h-8 rounded-full  flex items-center justify-center   hover:opacity-70 transition-opacity">
                      </a>
                  </div>
@@ -250,7 +250,7 @@
  <!-- Include Swiper JS -->
  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js"></script>
- <script src="{{ asset('js/app.js') }}"></script>
+ <script src="{{ asset('theme-assets/js/app.js') }}"></script>
 
  <script>
 Fancybox.bind("[data-fancybox]", {

@@ -11,7 +11,7 @@
     <!-- Flowbite & Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+    <link href="{{ asset('theme-assets/css/app.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/flowbite-typography@1.0.5/dist/typography.min.css" rel="stylesheet">
@@ -19,13 +19,13 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('theme-assets/favicon/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('theme-assets/favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('theme-assets/favicon/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('theme-assets/favicon/site.webmanifest') }}">
+    <link rel="manifest" href="{{ asset('theme-assets/assets/favicon/site.webmanifest') }}">
 
 </head>
 
 <body>
     <!-- Preloader -->
-    <div id="preloader" class="fixed inset-0 flex items-center justify-center bg-white  z-50">
+    {{-- <div id="preloader" class="fixed inset-0 flex items-center justify-center bg-white  z-50">
         <svg aria-hidden="true" class="w-16 h-16 text-neutral-tertiary animate-spin fill-brand-400"
             viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -36,16 +36,17 @@
                 fill="currentFill" />
         </svg>
         <span class="sr-only">Loading...</span>
-    </div>
+    </div> --}}
 
-    <script>
+    {{-- <script>
         // Hide preloader when page is fully loaded
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             preloader.classList.add('opacity-0', 'transition-opacity', 'duration-500');
             setTimeout(() => preloader.style.display = 'none', 500);
         });
-    </script>
+    </script> --}}
+
     <!-- Navbar desktop-->
     <nav id="desktop-navbar"
         class="sticky top-0 border-b border-gray-100 top-0 w-full  z-40
@@ -95,9 +96,7 @@
                                                 @foreach ($expedition as $index => $value)
                                                     <li>
                                                         <button
-                                                            class="w-full text-left px-5 py-4 rounded-xl transition hover:bg-gray-50
-                aria-selected:bg-brand-100 aria-selected:text-gray-900
-                aria-selected:ring-1 aria-selected:ring-brand-200"
+                                                            class="w-full text-left px-5 py-4 rounded-xl transition hover:bg-gray-50 aria-selected:bg-brand-100 aria-selected:text-gray-900 aria-selected:ring-1 aria-selected:ring-brand-200"
                                                             id="tab-{{ $value->id }}"
                                                             data-tabs-target="#content-{{ $value->id }}"
                                                             type="button" role="tab"
@@ -110,10 +109,7 @@
                                                         </button>
                                                     </li>
                                                 @endforeach
-
                                             </ul>
-
-
                                         </ul>
                                     </div>
                                     <!-- Content (Right) -->
@@ -138,7 +134,7 @@
                                                     @endforeach
                                                 </ul>
 
-                                                <a href="{{ url('trip-list/' . $value->slug) }}"
+                                                <a href="{{ route('expedition-list',$value->uri) }}"
                                                     class="inline-flex items-center text-brand-400 mt-8 hover:underline">
                                                     View all
                                                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor"
@@ -147,12 +143,9 @@
                                                             d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                                     </svg>
                                                 </a>
-
                                             </div>
                                         @endforeach
-
                                     </div>
-
                                 </div>
                             </div>
                         </li>
@@ -209,7 +202,7 @@
                                         <a href="trip-list.php"
                                             class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium-medium hover:text-brand-400 rounded-lg">Luxury
                                             Tour of Nepal</a>
-                                    </li>   
+                                    </li>
                                 </ul>
                             </div>
                         </li>

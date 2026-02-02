@@ -215,7 +215,7 @@ class FrontpageController extends Controller
             $cost_includes = CostIncludesModel::where('trip_detail_id', $data->id)->orderBy('ordering', 'asc')->get();
             $cost_excludes = CostExcludesModel::where('trip_detail_id', $data->id)->orderBy('ordering', 'asc')->get();
             $photo_videos = TripGearModel::where('trip_detail_id', $data->id)->orderBy('ordering', 'asc')->get();
-            $photos = TripGearModel::where('trip_detail_id', $data->id)->where('thumbnail', '!=', 'NULL')->orderBy('ordering', 'asc')->get();
+            $photos = TripGearModel::where('trip_detail_id', $data->id)->where('thumbnail', '!=', 'NULL')->orderBy('ordering', 'desc')->get();
             $videos = TripGearModel::where('trip_detail_id', $data->id)->where('video', '!=', 'NULL')->orderBy('ordering', 'asc')->get();
             $trip_review = TripReview::where('trip_id', $data->id)->where('status', 1)->get();
             $banner = TripBanner::where('trip_detail_id', $data->id)->orderBy('ordering', 'asc')->get();
@@ -235,6 +235,8 @@ class FrontpageController extends Controller
         $activity = TripModel::find($data->id)->activities()->get();
 
         $setting = SettingModel::where('id',1)->first();
+
+        // dd($data,$photos,$itinerary);
         return view('themes.default.tripdetail', compact('data', 'trip_review',
             'cost_includes', 'cost_excludes', 'itinerary',
             'photo_videos', 'activity','similar_trips','photos','videos','local','banner','setting','schedules','faqs','tripId', 'tripUri'));
@@ -901,7 +903,9 @@ class FrontpageController extends Controller
     public function expedition(Request $request)
     {
         $item= ActivityModel::where('uri',$request->uri)->first();
-        $data = ActivityModel::find($item->id)->trips()->where('status','1')->orderBy('ordering','asc')->get(); 
+        $data = ActivityModel::find($item->id)->trips()->where('status','1')->orderBy('ordering','asc')->paginate(6);
+        
+        // dd($item,$data);
         return view('themes.default.expedition', compact('data','item'));
     }
     public function package($uri)
