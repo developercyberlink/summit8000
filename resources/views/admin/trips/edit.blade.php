@@ -31,7 +31,7 @@
                 <li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab"> COST EXCLUDES </a></li>
                 <li class="nav-item"><a class="nav-link" href="#tab_5" data-toggle="tab"> PHOTOS</a></li>
                 <li class="nav-item"><a class="nav-link" href="#tab_7" data-toggle="tab"> DATES</a></li>
-                    <!--<li class="nav-item"><a class="nav-link" href="#tab_8" data-toggle="tab"> FAQ's </a></li>-->
+                <li class="nav-item"><a class="nav-link" href="#tab_8" data-toggle="tab"> FAQ's </a></li>
 
                 <!--<li class="nav-item"><a class="nav-link" href="#tab_6" data-toggle="tab"> BANNER</a></li>-->
                 </ul>
@@ -60,7 +60,7 @@
                            @include('admin.trips.edit.edit-trip-schedule') 
                         </div>  
                         <div class="tab-pane" id="tab_8">
-                           <!--@include('admin.trips.edit.edit-faqs') -->
+                           @include('admin.trips.edit.edit-faqs')
                         </div>  
                     </div>
                     <!-- /.tab-content -->

@@ -38,11 +38,13 @@ Route::get('/contact-verify/{token}', 'FrontendControllers\FrontpageController@v
 Route::get('{uri}.html', 'FrontendControllers\FrontpageController@pagedetail')->name('page.pagedetail');
 Route::get('type-{uri}', 'FrontendControllers\FrontpageController@posttype')->name('page.posttype_detail');  
 
-Route::get('page/expedition/{uri}.html', 'FrontendControllers\FrontpageController@expedition')->name('expedition-list');
-Route::get('page/tour.html', 'FrontendControllers\FrontpageController@tour')->name('tour');
+Route::get('expedition/{uri}', 'FrontendControllers\FrontpageController@expedition')->name('expedition-list');
+// Route::get('page/expedition/{uri}.html', 'FrontendControllers\FrontpageController@expedition')->name('expedition-list');
+// Route::get('page/tour.html', 'FrontendControllers\FrontpageController@tour')->name('tour');
 Route::get('page/trekking-region/{uri}.html', 'FrontendControllers\FrontpageController@trekking')->name('trekking-list');
-Route::get('page/package/{uri}.html', 'FrontendControllers\FrontpageController@package')->name('package-list');
-Route::get('package/{uri}', 'FrontendControllers\FrontpageController@packageDetail')->name('packageDetail');
+// Route::get('page/trekking-region/{uri}.html', 'FrontendControllers\FrontpageController@trekking')->name('trekking-list');
+// Route::get('page/package/{uri}.html', 'FrontendControllers\FrontpageController@package')->name('package-list');
+// Route::get('package/{uri}', 'FrontendControllers\FrontpageController@packageDetail')->name('packageDetail');
 
 // for captcha
 Route::get('captcha', 'CaptchaController@refreshCaptcha');

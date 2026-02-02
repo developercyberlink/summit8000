@@ -33,8 +33,8 @@
                     <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab"> COST INCLUDES</a></li>
                     <li class="nav-item"><a class="nav-link" href="#tab_4" data-toggle="tab"> COST EXCLUDES</a></li> 
                     <li class="nav-item"><a class="nav-link" href="#tab_5" data-toggle="tab"> PHOTOS </a></li>
-                     <li class="nav-item"><a class="nav-link" href="#tab_7" data-toggle="tab"> DATES </a></li>
-                     <!--<li class="nav-item"><a class="nav-link" href="#tab_8" data-toggle="tab"> FAQ's </a></li>-->
+                    <li class="nav-item"><a class="nav-link" href="#tab_7" data-toggle="tab"> DATES </a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tab_8" data-toggle="tab"> FAQ's </a></li>
                     <!--<li class="nav-item"><a class="nav-link" href="#tab_6" data-toggle="tab"> BANNER </a></li>   -->
                     </ul>
                 </div><!-- /.card-header -->
@@ -61,8 +61,8 @@
                          <div class="tab-pane" id="tab_7">
                            @include('admin.trips.create.create-trip-schedule') 
                         </div>  
-                          <div class="tab-pane" id="tab_8">
-                           <!--@include('admin.trips.create.create-faqs') -->
+                        <div class="tab-pane" id="tab_8">
+                           @include('admin.trips.create.create-faqs')
                         </div>                    
                     </div>
                     <!-- /.tab-content -->

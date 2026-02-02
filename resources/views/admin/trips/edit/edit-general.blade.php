@@ -202,14 +202,13 @@
 
         <div class="panel">
             <div class="panel-heading">
-                <span class="panel-title">Trip Content Title</span>
+                <span class="panel-title">Trip Content</span>
             </div>
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-lg-12">
                         <div class="bs-component">
-                            <textarea class="form-control" id="trip_highlight" name="trip_highlight"
-                                placeholder="Trip Content Title">{{ $data->trip_highlight }}</textarea>
+                            <textarea class="my-editor form-control" name="trip_content" id="trip_content" placeholder="Trip Content" rows="9">{{ $data->trip_content }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -218,13 +217,14 @@
 
         <div class="panel">
             <div class="panel-heading">
-                <span class="panel-title">Trip Content</span>
+                <span class="panel-title">Trip Gears List</span>
             </div>
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-lg-12">
                         <div class="bs-component">
-                            <textarea class="my-editor form-control" name="trip_content" id="trip_content" placeholder="Trip Content" rows="9">{{ $data->trip_content }}</textarea>
+                            <textarea class="my-editor form-control" id="trip_highlight" name="trip_highlight"
+                                placeholder="Trip Gears List">{{ $data->trip_highlight }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -499,6 +499,16 @@
                         <input type="number" name="ordering" class="form-control" placeholder="Ordering"
                             value="{{ $data->ordering }}" />
                     </label>
+                </div>
+            </div>
+            <div class="sid_bvijay mb10">
+                <h4> Trip Video </h4>
+                <div class="hd_show_con">
+                    <label class="field text">
+                        <input type="text" name="trip_video" class="form-control" placeholder="YouTube Video ID"
+                            value="{{ $data->trip_video }}" />
+                    </label>
+                    <label for="">www.youtube.com/watch?v=<strong>bFy6jTEHlzQ</strong></label>
                 </div>
             </div>
 

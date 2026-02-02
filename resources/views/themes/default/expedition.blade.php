@@ -1,69 +1,67 @@
 @extends('themes.default.common.master')
-@section('title','Expedition List')
+@section('title', 'Expedition List')
 @section('content')
 
-<!-- banner section start -->
-<section class=" uk-cover-container uk-position-relative uk-flex uk-flex-bottom uk-background-norepeat uk-background-cover uk-background-top-center uk-background-fixed" uk-height-viewport data-src="{{ $item->banner ? asset('uploads/banners/'.$item->banner) : asset('theme-assets/img/banner/bg-2.jpeg')}}" alt="" uk-img>
-    <div class="uk-overlay-banner uk-position-cover"></div>
-    <div class="uk-position-bottom-left uk-padding-large" uk-scrollspy="target: ul,h2,p; cls: uk-animation-slide-top-medium; delay: 800;">
-        <ul class="uk-breadcrumb">
-            <li><a href="{{ url('/') }}" class="text-white uk-text-bold">Home</a></li>
-            <li><span class="text-secondary uk-text-bold">{{ strtoupper($item->activity_parent) }}</span></li>
-        </ul>
-        <h2 class="text-secondary uk-margin-remove">{{$item->title }}</h2>
-    </div>
-</section>
-<!-- banner section end -->
-<div class="texture">
-    <img src="{{asset('theme-assets/img/highertexture.png')}}" alt="texture">
-</div>
-<!-- introduction section start-->
-<section class="uk-section bg-pattern uk-padding-remove-bottom">
-    <div class="uk-container">
-        <div class="" uk-scrollspy="target: h2,p; cls: uk-animation-slide-top-medium; delay: 200;">
-            <h2 class="text-secondary"> {{$item->sub_title ? $item->sub_title : 'Reach New Heights with '. $item->title. ' Mountains!'}}</h2>
-            <p class="text-black  uk-text-justify uk-margin-bottom">{!! $item->content !!}</p>
+    <!-- Hero Section -->
+    <div class="relative h-[480px] bg-cover bg-center flex items-center lazy-image "
+        style="background-image: url('{{$item->banner? asset('uploads/banners/'.$item->banner) : asset('theme-assets/assets/trip/8000.jpg')}}');" loading="lazy">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="relative container  ">
+            <div class="max-w-2xl text-white">
+                <h1 class="text-5xl font-bold mb-6">{{ $item->title }}</h1>
+                <p class="text-lg">
+                    {{ $item->excerpt }}
+                </p>
+            </div>
         </div>
     </div>
-</section>
-<!-- introduction section end-->
 
-<!-- list section start-->
-<section class="uk-section uk-padding-remove-top">
-    <div class="uk-container">
-        <div class=" uk-child-width-1-1 uk-child-width-1-2@m uk-child-width-1-3@l uk-grid uk-grid-small uk-grid-match" uk-height-match="target: .list-text" uk-scrollspy=" cls: uk-animation-slide-left-small; delay: 200;" >
-            @foreach ($data as $item)
-                <div class="uk-margin-medium-bottom">
-                    <div class="uk-card uk-card-default bg-primary border">
-                        <a href="{{ url('page/' . tripurl($item->uri)) }}" class="uk-display-block uk-inline-clip uk-transition-toggle uk-link-toggle uk-overflow-hidden border">
-                            <div class="uk-card-media-top uk-230">
-                                <img src="{{ $item->thumbnail ? asset('uploads/original/'.$item->thumbnail) : asset('theme-assets/img/slider1.jpeg')}}" loading="lazy" alt="{{$item->trip_title}}"  class="border uk-transition-scale-up uk-transition-opaque">
+    <!-- Product Grid Section -->
+    <section class="py-16  pattern-white relative">
+        <div class="container">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                @foreach($data as $row)
+                    <a href="{{ url('page/' . tripurl($row->uri)) }}" class="block bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 transition-transform hover:-translate-y-1">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="{{ $row->thumbnail ? asset('uploads/original/'.$row->thumbnail)  : asset('theme-assets/assets/trip/1.jpg')}}" alt="{{ $row->trip_title }}" loading="lazy" class="lazy-image w-full h-full object-cover">
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center gap-1 mb-2">
+                                <i class="fa fa-star text-yellow-400 text-xs"></i>
+                                <i class="fa fa-star text-yellow-400 text-xs"></i>
+                                <i class="fa fa-star text-yellow-400 text-xs"></i>
+                                <i class="fa fa-star text-yellow-400 text-xs"></i>
+                                <i class="fa fa-star-half text-yellow-400 text-xs"></i>
+                                <span class="text-slate-400 text-xs ml-1">1547 reviews</span>
                             </div>
-                        </a>
-                        <div class="uk-card-body uk-padding-small border bg-primary">
-                            <div class="list-text">
-                                <h3 class="uk-card-title text-white">{{$item->trip_title}}</h3>
-                                <div class="uk-grid uk-grid-collapse">
-                                    @if($item->duration)
-                                        <div class="uk-package-badge">{{$item->duration}}</div>
-                                    @endif
-                                    <div class="uk-package-badge uk-margin-vertical">{{$item->trip_grade ?  grade_message_trek($item->trip_grade) : 'Moderate'}}</div> 
-                                    @if($item->max_altitude)
-                                        <div class="uk-package-badge">{{$item->max_altitude}}</div>
-                                    @endif
+                            <h3 class="text-xl font-bold text-slate-900 mb-4">{{ $row->trip_title }}</h3>
+                            <div class="flex justify-between items-center text-xs text-slate-500 mb-6 pb-6 border-b border-slate-100">
+                                <span class="flex items-center gap-1 text-xs">
+                                    <img src="{{asset('theme-assets/assets/icons/map-point.svg')}}" class="h-4"> Nepal
+                                </span>
+                                <span class="flex items-center gap-1"><img src="{{asset('theme-assets/icons/clock.svg')}}" class="h-4">
+                                    {{ $row->duration }}
+                                </span>
+                                <span class="flex items-center gap-1"><img src="{{asset('theme-assets/assets/icons/summer.svg')}}" class="h-4">
+                                    {{ $row->best_season }}
+                                </span>
+                            </div>
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <p class="text-sm text-slate-400 font-medium">50 days from</p>
+                                    <p class="text-xl font-bold text-slate-900">US$ {{ $row->price }}</p>
                                 </div>
-                                <p class="text-white f-14 fw-500 three-line uk-margin-remove-bottom">{{$item->sub_title}}</p>
-                            </div>
-                            <div class="uk-margin-small-top">
-                                <a href="{{ url('page/' . tripurl($item->uri)) }}" class="uk-btn1 uk-btn-primary uk-width-1-1 uk-flex uk-flex-middle uk-flex-between p-btn">Learn More <span uk-icon="chevron-right"></span></a>
+                                <button class="text-white bg-brand-400 hover:bg-brand-500  font-medium rounded-xl text-sm px-5 py-3 transition shadow-sm">
+                                    More Info
+                                </button>
                             </div>
                         </div>
-                    </div>
-                </div>
-            @endforeach
+                    </a>
+                @endforeach
+            </div>
+            {!! $data->links('themes.default.common.pagination') !!}
         </div>
-    </div>
-</section>
-@include('themes/default/common/booknow')
-<!-- list section end-->
+    </section>
+
 @stop
